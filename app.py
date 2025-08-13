@@ -184,9 +184,9 @@ def main():
     # --- Custom CSS for KB-like theme ---
     # KB 국민은행 웹사이트 색상을 기반으로 테마를 적용합니다.
     # 주요 색상: KB 옐로우 (#FFCD00), 진한 파랑 (#002C5F), 연한 회색 배경 (#F8F9FA)
-    st.markdown("""
+   st.markdown("""
         <style>
-        /* 사이드바 배경색을 노란색으로 변경 */
+        /* 사이드바 전체 배경을 노란색으로 변경 */
         [data-testid="stSidebar"] {
             background-color: #FFCD00;
         }
@@ -196,7 +196,7 @@ def main():
             color: #002C5F; 
         }
 
-        /* "시작" 버튼 (사이드바의 primary 버튼) 스타일 변경 */
+        /* '시작' 버튼 (사이드바의 primary 버튼) 스타일 변경 */
         .stButton button[data-testid="stSidebarSubmitButton"] {
             background-color: #FFFFFF; /* 흰색 배경 */
             color: #000000; /* 검은색 글씨 */
