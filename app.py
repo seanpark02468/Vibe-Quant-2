@@ -38,10 +38,10 @@ def main():
     st.sidebar.header("")
     initial_insight = st.sidebar.text_area(
         "당신의 투자 아이디어를 입력하세요",
-        height=200,
+        height=120,
         placeholder="예시: 거래량이 급증하는 소형주는 단기적으로 가격이 상승하는 경향이 있다."
     )
-    start_button = st.sidebar.button("Go", type="primary")
+    start_button = st.sidebar.button("알파 팩터 탐색 시작", type="primary")
 
     # --- 워크플로우 실행 ---
     if start_button:
