@@ -77,7 +77,7 @@ class InvestmentAdviceAgent:
         -   **투자 유의사항:**
             -   "본 리포트는 투자 판단을 돕기 위한 정보 제공을 목적으로 하며, 특정 종목의 매수/매도를 추천하는 것이 아닙니다." 와 같은 면책 조항을 포함합니다.
             -   과거 데이터에 기반한 분석이며, 미래 수익을 보장하지 않는다는 점을 명확히 고지합니다.
-"""
+        """
 
         report = self.llm_client.generate_text(user_prompt, system_prompt)
         return report
