@@ -35,7 +35,7 @@ def main():
     당신의 투자 아이디어를 바탕으로, 초과 수익 기회를 찾아주는 투자 포뮬라 (알파 팩터)를 탐색합니다.
     """)
 
-    # st.sidebar.header("입력 패널")
+    st.sidebar.header("입력 패널")
     initial_insight = st.sidebar.text_area(
         "당신의 투자 아이디어를 입력하세요",
         height=150,
