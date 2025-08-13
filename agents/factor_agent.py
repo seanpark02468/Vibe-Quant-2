@@ -30,7 +30,7 @@ You MUST strictly follow these rules:
 1. **Output Format**
    - The final output MUST be a valid JSON array.
    - Each element MUST be an object with exactly two keys:
-     - "description": a concise human-readable explanation of the factor.
+     - "description": a concise human-readable explanation(written in Korean) of the factor.
      - "formula": a Python expression that can be evaluated by `pandas.DataFrame.eval()`.
 
 2. **Allowed Variables**
