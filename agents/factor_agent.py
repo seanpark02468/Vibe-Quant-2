@@ -20,7 +20,6 @@ class FactorAgent:
         self.available_operators = list(self.operator_info.keys())
 
     def create_factors(self, hypothesis: dict, num_factors: int = 3) -> list:
-        # system_prompt 생성
         system_prompt = f"""
 You are an experienced Python and pandas quant developer.
 Your task is to convert the given investment hypothesis into mathematical alpha factor expressions.
