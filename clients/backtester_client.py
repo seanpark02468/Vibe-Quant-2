@@ -36,7 +36,7 @@ class BacktesterClient:
         # 파일이 로컬에 존재하지 않는 경우에만 다운로드
         if not os.path.exists(output_path):
             try:
-                with st.spinner("구글 드라이브에서 주식 데이터를 다운로드 중입니다... (파일 크기에 따라 시간이 걸릴 수 있습니다)"):
+                with st.spinner("구글 드라이브에서 데이터를 다운로드 중입니다... (파일 크기에 따라 시간이 걸릴 수 있습니다)"):
                     # gdown.download의 결과를 변수로 받아 성공 여부 확인
                     downloaded_path = gdown.download(id=st.secrets["GOOGLE_DRIVE_FILE_ID"], output=output_path, quiet=False)
                     if downloaded_path is None:
@@ -55,7 +55,7 @@ class BacktesterClient:
             df['date'] = pd.to_datetime(df['date'])
             df.sort_values(by=['ticker', 'date'], inplace=True)
             df.reset_index(drop=True, inplace=True)
-            st.success("데이터 로딩 완료!")
+            st.success("데이터 로딩 완료")
             return df
         except pyarrow.lib.ArrowInvalid as e: # Parquet 파일이 아닐 때 발생하는 특정 오류
             st.error(f"다운로드된 파일이 유효한 Parquet 형식이 아닙니다. 파일을 삭제하고 재시도합니다. 오류: {e}")
