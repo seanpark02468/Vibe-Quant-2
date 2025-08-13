@@ -185,13 +185,13 @@ def main():
         """
         <style>
         .stApp {
-            background-color: #FFFACD; /* Lemon Chiffon, 연한 노란색 */
+            background-color: #FFFFFF; /* 흰색 배경 */
         }
         .st-emotion-cache-vk3373 { /* 사이드바 배경색 */
-            background-color: #FFFACD; /* Lemon Chiffon */
+            background-color: #FFEB00; /* KB 공모전 UI의 노란색에 가까운 색 */
         }
-        .st-emotion-cache-1wqx63q { /* 텍스트 입력창 배경색 */
-            background-color: #FFFACD; /* Lemon Chiffon */
+        .st-emotion-cache-1wqx63q { /* 텍스트 입력창 배경색 (사이드바에 있으므로 사이드바와 동일하게 유지) */
+            background-color: #FFEB00; /* KB 공모전 UI의 노란색에 가까운 색 */
         }
         </style>
         """,
@@ -321,6 +321,3 @@ def main():
         except Exception as e:
             # 붉은색 오류 메시지를 노란색 경고 메시지로 변경
             st.warning(f"오류가 발생했습니다: {e}")
-
-if __name__ == "__main__":
-    main()
