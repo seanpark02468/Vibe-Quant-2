@@ -70,20 +70,23 @@ def main():
                     current_hypothesis = idea_agent.generate_initial_hypothesis(initial_insight)
                 if not current_hypothesis:
                     st.error("가설 생성에 실패했습니다. 워크플로우를 중단합니다."); return
-                st.write("**생성된 가설:**"); st.json(current_hypothesis)
+                # st.write("**생성된 가설:**"); st.json(current_hypothesis)
+                st.success("가설 생성이 완료되었습니다.")
 
                 # --- 알파 팩터 생성 단계 ---
                 with st.spinner("LLM이 투자 가설을 바탕으로 알파 팩터를 생성 중입니다..."):
                     generated_factors = factor_agent.create_factors(current_hypothesis, num_factors=3)
                 if not generated_factors:
                     st.error("알파 팩터 생성에 실패했습니다. 워크플로우를 중단합니다."); return
-                st.write("**생성된 알파 팩터:**"); st.json(generated_factors)
+                # st.write("**생성된 알파 팩터:**"); st.json(generated_factors)
+                st.success("알파 팩터 생성이 완료되었습니다.")
 
                 # --- 알파 팩터 평가 단계 ---
                 with st.spinner(f"{len(generated_factors)}개 알파 팩터에 대한 평가를 실행합니다..."):
                     evaluated_factors = eval_agent.evaluate_factors(generated_factors)
-                st.write("**평가 결과:**")
-                st.dataframe(pd.DataFrame(evaluated_factors))
+                # st.write("**평가 결과:**")
+                # st.dataframe(pd.DataFrame(evaluated_factors))
+                st.success("알파 팩터 평가가 완료되었습니다.")
             
             if not evaluated_factors or pd.DataFrame(evaluated_factors).empty:
                 st.warning("유효한 알파 팩터가 발굴되지 않았습니다."); return
@@ -105,7 +108,6 @@ def main():
                 with st.spinner("알파 팩터 최적화 진행 중..."):
                     # 필터링된 유효한 팩터 리스트를 최적화 함수에 전달합니다.
                     optimal_params = optimizer.optimize(valid_factors_for_opt)
-                    status.update(label="알파팩터 최적화가 완료되었습니다.", state="complete", expanded=False)
             
             st.success("알파팩터 최적화가 완료되었습니다.")
 
