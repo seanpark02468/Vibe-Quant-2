@@ -102,7 +102,8 @@ def main():
                 # 최적화 실패 시 사용할 기본 파라미터
                 optimal_params = {'lambda_val': 0.001, 'alpha1': 0.5, 'alpha2': 0.5}
             else:
-                with st.spinner("알파 팩터 최적화 진행 중..."):
+                with st.status("알파 팩터 최적화 진행 중...", expanded=True) as status:
+                # with st.spinner("알파 팩터 최적화 진행 중..."):
                     # 필터링된 유효한 팩터 리스트를 최적화 함수에 전달합니다.
                     optimal_params = optimizer.optimize(valid_factors_for_opt)
                     status.update(label="알파팩터 최적화가 완료되었습니다.", state="complete", expanded=False)
