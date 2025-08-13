@@ -105,8 +105,9 @@ def main():
                 with st.spinner("알파 팩터 최적화 진행 중..."):
                     # 필터링된 유효한 팩터 리스트를 최적화 함수에 전달합니다.
                     optimal_params = optimizer.optimize(valid_factors_for_opt)
+                    status.update(label="알파팩터 최적화가 완료되었습니다.", state="complete", expanded=False)
             
-            st.success("알파팩터 최적화가 완료되었습니다.")
+            # st.success("알파팩터 최적화가 완료되었습니다.")
 
             # 4. 메인 로직 (3단계): 알파 팩터 설명 및 투자 조언
             st.subheader("3단계: 알파 팩터 설명 및 투자 조언")
