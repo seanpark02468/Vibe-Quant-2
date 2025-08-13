@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # /core/optimizer.py
 
 import re
