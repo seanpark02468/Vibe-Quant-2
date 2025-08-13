@@ -31,17 +31,17 @@ def main():
     # --- UI 구성 ---
     st.title("Vibe Quant")
     st.markdown("""
-    이 서비스는 LLM 에이전트를 활용하여 새로운 투자 아이디어(알파 팩터)를 발굴하고,
-    백테스팅을 통해 검증한 뒤, 최종적으로 개인 투자자를 위한 조언 리포트를 생성합니다.
+    Vibe Quant는 개인 투자자가 손쉽게 퀀트 투자를 경험해볼 수 있게 도와줍니다.
+    당신의 투자 아이디어를 바탕으로, 초과 수익 기회를 찾아주는 투자 포뮬라 (알파 팩터)를 탐색합니다.
     """)
 
     st.sidebar.header("입력 패널")
     initial_insight = st.sidebar.text_area(
-        "초기 투자 아이디어를 입력하세요",
+        "당신의 투자 아이디어를 입력하세요",
         height=150,
         placeholder="예시: 거래량이 급증하는 소형주는 단기적으로 가격이 상승하는 경향이 있다."
     )
-    start_button = st.sidebar.button("알파 탐색 시작", type="primary")
+    start_button = st.sidebar.button("알파 팩터 탐색 시작", type="primary")
 
     # --- 워크플로우 실행 ---
     if start_button:
@@ -59,39 +59,38 @@ def main():
                 eval_agent = EvalAgent(backtester_client)
                 advice_agent = InvestmentAdviceAgent(llm_client)
                 optimizer = HyperparameterOptimizer()
-                status.update(label="초기화 완료!", state="complete", expanded=False)
+                status.update(label="초기화 완료", state="complete", expanded=False)
 
-            # 2. 메인 로직 (1단계): 팩터 탐색 및 평가
-            st.subheader("1단계: 팩터 탐색 및 평가")
+            # 2. 메인 로직 (1단계): 알파 팩터 탐색
+            st.subheader("1단계: 알파 팩터 탐색")
             
-            with st.expander("초기 탐색 과정 보기", expanded=True):
+            with st.expander("탐색 과정 보기", expanded=True):
                 # --- 가설 생성 단계 ---
-                with st.spinner("LLM이 새로운 투자 가설을 생성 중입니다..."):
+                with st.spinner("LLM이 당신의 투자 아이디어에 부합하는 투자 가설을 생성 중입니다..."):
                     current_hypothesis = idea_agent.generate_initial_hypothesis(initial_insight)
                 if not current_hypothesis:
                     st.error("가설 생성에 실패했습니다. 워크플로우를 중단합니다."); return
                 st.write("**생성된 가설:**"); st.json(current_hypothesis)
 
-                # --- 후보 팩터 생성 단계 ---
-                with st.spinner("LLM이 가설을 바탕으로 후보 팩터를 생성 중입니다..."):
+                # --- 알파 팩터 생성 단계 ---
+                with st.spinner("LLM이 투자 가설을 바탕으로 알파 팩터를 생성 중입니다..."):
                     generated_factors = factor_agent.create_factors(current_hypothesis, num_factors=3)
                 if not generated_factors:
-                    st.error("후보 팩터 생성에 실패했습니다. 워크플로우를 중단합니다."); return
-                st.write("**생성된 후보 팩터:**"); st.json(generated_factors)
+                    st.error("알파 팩터 생성에 실패했습니다. 워크플로우를 중단합니다."); return
+                st.write("**생성된 알파 팩터:**"); st.json(generated_factors)
 
-                # --- 후보 팩터 평가 단계 ---
-                with st.spinner(f"{len(generated_factors)}개 후보 팩터에 대한 백테스팅을 실행합니다..."):
+                # --- 알파 팩터 평가 단계 ---
+                with st.spinner(f"{len(generated_factors)}개 알파 팩터에 대한 평가를 실행합니다..."):
                     evaluated_factors = eval_agent.evaluate_factors(generated_factors)
-                st.write("**후보 팩터 평가 결과:**")
+                st.write("**평가 결과:**")
                 st.dataframe(pd.DataFrame(evaluated_factors))
             
             if not evaluated_factors or pd.DataFrame(evaluated_factors).empty:
-                st.warning("유효한 후보 팩터가 발굴되지 않았습니다."); return
+                st.warning("유효한 알파 팩터가 발굴되지 않았습니다."); return
 
-            # 3. 메인 로직 (2단계): 하이퍼파라미터 최적화
-            st.subheader("⚙️ 2단계: 하이퍼파라미터 최적화")
+            # 3. 메인 로직 (2단계): 알파 팩터 최적화
+            st.subheader("2단계: 알파 팩터 최적화")
 
-            # --- 🔑 주요 수정 사항 ---
             # 최적화를 위해 IC 값이 유효한(NaN이 아닌) 팩터만 필터링합니다.
             valid_factors_for_opt = [
                 f for f in evaluated_factors 
@@ -99,24 +98,22 @@ def main():
             ]
 
             if not valid_factors_for_opt:
-                st.warning("하이퍼파라미터 최적화를 수행할 유효한 팩터가 없습니다. 기본값을 사용합니다.")
+                st.warning("최적화를 수행할 유효한 알파 팩터가 없습니다. 기본값을 사용합니다.")
                 # 최적화 실패 시 사용할 기본 파라미터
                 optimal_params = {'lambda_val': 0.001, 'alpha1': 0.5, 'alpha2': 0.5}
             else:
-                with st.spinner("베이지안 최적화를 통해 최적의 패널티 계수를 찾고 있습니다..."):
+                with st.spinner("알파 팩터 최적화 진행 중..."):
                     # 필터링된 유효한 팩터 리스트를 최적화 함수에 전달합니다.
                     optimal_params = optimizer.optimize(valid_factors_for_opt)
             
-            st.success("하이퍼파라미터 최적화가 완료되었습니다.")
-            st.write("최적의 패널티 계수는 다음과 같습니다:")
-            st.json(optimal_params)
+            st.success("알파팩터 최적화가 완료되었습니다.")
 
-            # 4. 메인 로직 (3단계): 최종 분석 및 투자 조언 생성
-            st.subheader("🏆 3단계: 최종 분석 및 투자 조언")
+            # 4. 메인 로직 (3단계): 알파 팩터 설명 및 투자 조언
+            st.subheader("3단계: 알파 팩터 설명 및 투자 조언")
 
             final_ranked_factors = []
             for factor in evaluated_factors:
-                if factor.get('ic') is not None and pd.notna(factor.get('ic')): # 최종 랭킹에서도 유효한 팩터만 사용
+                if factor.get('ic') is not None and pd.notna(factor.get('ic')):
                     penalty = calculate_penalty(factor['formula'], optimal_params['alpha1'], optimal_params['alpha2'])
                     final_score = factor['ic'] - optimal_params['lambda_val'] * penalty
                     
@@ -129,12 +126,12 @@ def main():
                 st.warning("점수를 계산할 유효한 팩터가 없습니다."); return
             
             final_ranked_factors.sort(key=lambda x: x['optimized_score'], reverse=True)
-            st.write("최적화된 점수를 포함한 최종 팩터 랭킹:")
+            st.write("알파 팩터 랭킹:")
             st.dataframe(pd.DataFrame(final_ranked_factors))
 
             best_factor = final_ranked_factors[0]
 
-            st.write("✨ **최종 선정된 최고의 알파 팩터:**")
+            st.write("✨ **최종 선정된 최상의 알파 팩터:**")
             st.json(best_factor)
 
             # --- 투자 조언 리포트 생성 ---
