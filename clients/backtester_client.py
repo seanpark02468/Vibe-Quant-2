@@ -55,7 +55,7 @@ class BacktesterClient:
             df['date'] = pd.to_datetime(df['date'])
             df.sort_values(by=['ticker', 'date'], inplace=True)
             df.reset_index(drop=True, inplace=True)
-            st.success("데이터 로딩 완료!")
+            # st.success("데이터 로딩 완료!")
             return df
         except pyarrow.lib.ArrowInvalid as e: # Parquet 파일이 아닐 때 발생하는 특정 오류
             st.error(f"다운로드된 파일이 유효한 Parquet 형식이 아닙니다. 파일을 삭제하고 재시도합니다. 오류: {e}")
