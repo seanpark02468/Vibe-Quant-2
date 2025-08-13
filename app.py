@@ -38,7 +38,7 @@ def main():
     st.sidebar.header("")
     initial_insight = st.sidebar.text_area(
         "당신의 투자 아이디어를 입력하세요",
-        height=150,
+        height=200,
         placeholder="예시: 거래량이 급증하는 소형주는 단기적으로 가격이 상승하는 경향이 있다."
     )
     start_button = st.sidebar.button("Go", type="primary")
