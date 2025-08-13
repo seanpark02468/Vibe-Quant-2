@@ -187,11 +187,11 @@ def main():
         .stApp {
             background-color: #FFFFFF; /* 흰색 배경 */
         }
-        .st-emotion-cache-vk3373 { /* 사이드바 배경색 */
-            background-color: #FFEB00; /* KB 공모전 UI의 노란색에 가까운 색 */
+        .st-emotion-cache-vk3373 { /* 사이드바 배경색 - KB 웹사이트의 노란색에 더 가깝게 조정 */
+            background-color: #FEE500; /* KB 웹사이트의 로고 및 UI에서 추출한 노란색 */
         }
         .st-emotion-cache-1wqx63q { /* 텍스트 입력창 배경색 (사이드바에 있으므로 사이드바와 동일하게 유지) */
-            background-color: #FFEB00; /* KB 공모전 UI의 노란색에 가까운 색 */
+            background-color: #FEE500; /* KB 웹사이트의 로고 및 UI에서 추출한 노란색 */
         }
         </style>
         """,
@@ -324,3 +324,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
