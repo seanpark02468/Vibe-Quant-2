@@ -40,9 +40,9 @@ class LLMClient:
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
-                temperature=0.7, # 창의성과 일관성 사이의 균형을 맞추기 위한 설정
+                temperature=0.7,
             )
             return response.choices[0].message.content.strip()
         except Exception as e:
             st.error(f"LLM 응답 생성 중 오류 발생: {e}")
-            return "" # 오류 발생 시 빈 문자열 반환
+            return ""
