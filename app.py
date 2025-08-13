@@ -16,7 +16,7 @@ from core.optimizer import HyperparameterOptimizer
 def calculate_penalty(formula: str, alpha1: float, alpha2: float) -> float:
     """
     app.py 내에서 패널티 계산을 위한 헬퍼 함수.
-    optimizer의 로직과 동일하게 유지합니다.
+    optimizer.py의 로직과 동일하게 유지합니다.
     """
     complexity_penalty = len(formula)
     param_count_penalty = len(re.findall(r'\d+', formula))
@@ -46,7 +46,7 @@ def main():
     # --- 워크플로우 실행 ---
     if start_button:
         if not initial_insight.strip():
-            st.sidebar.error("초기 투자 아이디어를 입력해주세요.")
+            st.sidebar.error("당신의 투자 아이디어를 입력해주세요.")
             return
 
         try:
@@ -58,11 +58,11 @@ def main():
                 factor_agent = FactorAgent(llm_client)
                 eval_agent = EvalAgent(backtester_client)
                 advice_agent = InvestmentAdviceAgent(llm_client)
-                optimizer = HyperparameterOptimizer() # Optimizer 인스턴스 생성
+                optimizer = HyperparameterOptimizer()
                 status.update(label="초기화 완료!", state="complete", expanded=False)
 
-            # 2. 메인 로직 (1단계): 초기 알파 탐색
-            st.subheader("🔄 1단계: 초기 알파 탐색 및 평가")
+            # 2. 메인 로직 (1단계): 팩터 탐색 및 평가
+            st.subheader("1단계: 팩터 탐색 및 평가")
             
             with st.expander("초기 탐색 과정 보기", expanded=True):
                 # --- 가설 생성 단계 ---
@@ -70,23 +70,23 @@ def main():
                     current_hypothesis = idea_agent.generate_initial_hypothesis(initial_insight)
                 if not current_hypothesis:
                     st.error("가설 생성에 실패했습니다. 워크플로우를 중단합니다."); return
-                st.write("✨ **생성된 가설:**"); st.json(current_hypothesis)
+                st.write("**생성된 가설:**"); st.json(current_hypothesis)
 
-                # --- 팩터 생성 단계 ---
-                with st.spinner("LLM이 가설을 바탕으로 알파 팩터 수식을 생성 중입니다..."):
+                # --- 후보 팩터 생성 단계 ---
+                with st.spinner("LLM이 가설을 바탕으로 후보 팩터를 생성 중입니다..."):
                     generated_factors = factor_agent.create_factors(current_hypothesis, num_factors=3)
                 if not generated_factors:
-                    st.error("팩터 생성에 실패했습니다. 워크플로우를 중단합니다."); return
-                st.write("📝 **생성된 팩터 후보:**"); st.json(generated_factors)
+                    st.error("후보 팩터 생성에 실패했습니다. 워크플로우를 중단합니다."); return
+                st.write("**생성된 후보 팩터:**"); st.json(generated_factors)
 
-                # --- 팩터 평가 단계 ---
-                with st.spinner(f"{len(generated_factors)}개 팩터에 대한 백테스팅을 실행합니다..."):
+                # --- 후보 팩터 평가 단계 ---
+                with st.spinner(f"{len(generated_factors)}개 후보 팩터에 대한 백테스팅을 실행합니다..."):
                     evaluated_factors = eval_agent.evaluate_factors(generated_factors)
-                st.write("📊 **초기 팩터 평가 결과 (IC 기준 내림차순):**")
+                st.write("**후보 팩터 평가 결과:**")
                 st.dataframe(pd.DataFrame(evaluated_factors))
             
             if not evaluated_factors or pd.DataFrame(evaluated_factors).empty:
-                st.warning("유효한 팩터가 발굴되지 않았습니다."); return
+                st.warning("유효한 후보 팩터가 발굴되지 않았습니다."); return
 
             # 3. 메인 로직 (2단계): 하이퍼파라미터 최적화
             st.subheader("⚙️ 2단계: 하이퍼파라미터 최적화")
