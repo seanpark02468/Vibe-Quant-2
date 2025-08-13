@@ -186,142 +186,26 @@ def main():
     # 주요 색상: KB 옐로우 (#FFCD00), 진한 파랑 (#002C5F), 연한 회색 배경 (#F8F9FA)
     st.markdown("""
         <style>
-        /* 전체 배경색 - 흰색 */
-        body {
-            background-color: #FFFFFF;
+        /* 사이드바 배경색을 노란색으로 변경 */
+        [data-testid="stSidebar"] {
+            background-color: #FFCD00;
         }
-        /* 메인 컨테이너 배경색 (전체 페이지 배경과 동일하게 설정) */
-        .stApp {
-            background-color: #FFFFFF;
-        }
-
-        /* 사이드바 배경색 - 노란색 */
-        .stSidebar > div:first-child {
-            background-color: #FFCD00; /* KB 옐로우 */
-            border-right: 1px solid #FFDE00; /* 노란색 계열의 경계선 */
-        }
-        /* 사이드바 텍스트 색상 */
-        .stSidebar label {
-            color: #002C5F; /* 진한 파랑 */
+        
+        /* 사이드바 텍스트 색상을 진한 파란색으로 변경 */
+        [data-testid="stSidebar"] * {
+            color: #002C5F; 
         }
 
-        /* 제목 및 서브헤더 색상 */
-        h1, h2, h3, h4, h5, h6 {
-            color: #002C5F; /* 진한 파랑 */
-        }
-
-        /* 일반 텍스트 색상 */
-        .stMarkdown, .stText, .stTextArea, .stSelectbox {
-            color: #333333; /* 어두운 회색 (기본 텍스트) */
-        }
-
-        /* 기본 버튼 (시작 버튼을 제외한 다른 버튼) */
-        .stButton button {
-            background-color: #002C5F; /* 진한 파랑 */
-            color: #FFFFFF; /* 흰색 텍스트 */
-            border: none;
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
-            font-weight: bold;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .stButton button:hover {
-            background-color: #003B7F; /* 약간 더 진한 파랑 */
-            color: #FFFFFF; /* 흰색 텍스트 */
-            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Primary 버튼 (type="primary" 버튼) - 메인 컨텐츠 영역의 primary 버튼 */
-        .stButton button[data-testid="stFormSubmitButton"] {
-            background-color: #002C5F; /* 진한 파랑 */
-            color: #FFFFFF; /* 흰색 텍스트 */
-            border: none;
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
-            font-weight: bold;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .stButton button[data-testid="stFormSubmitButton"]:hover {
-            background-color: #003B7F; /* 약간 더 진한 파랑 */
-            color: #FFFFFF; /* 흰색 텍스트 */
-            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        /* "시작" 버튼 (사이드바의 primary 버튼) */
+        /* "시작" 버튼 (사이드바의 primary 버튼) 스타일 변경 */
         .stButton button[data-testid="stSidebarSubmitButton"] {
-             background-color: #FFFFFF; /* 흰색 배경 */
-             color: #000000; /* 검은색 글씨 */
-             border: 1px solid #FFCD00; /* 노란색 테두리 */
+            background-color: #FFFFFF; /* 흰색 배경 */
+            color: #000000; /* 검은색 글씨 */
+            border: 1px solid #FFCD00; /* 노란색 테두리 */
         }
         .stButton button[data-testid="stSidebarSubmitButton"]:hover {
-             background-color: #F0F0F0; /* 호버 시 약간 회색 */
-             color: #000000;
-             border-color: #FFDE00;
-        }
-
-        /* 스피너 및 상태 메시지 */
-        .stSpinner > div > div {
-            color: #002C5F; /* 진한 파랑 */
-        }
-        .stStatus {
-            background-color: #E0F2F7; /* 이미지의 라이트 블루 */
-            border-left: 5px solid #FFCD00; /* KB 옐로우 액센트 */
-            border-radius: 0.5rem;
-        }
-
-        /* Expander 헤더 */
-        .streamlit-expanderHeader {
-            background-color: #002C5F; /* 진한 파랑 */
-            color: white;
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
-            margin-bottom: 0.5rem;
-        }
-        .streamlit-expanderHeader > svg { /* Expander 화살표 색상 */
-            fill: white;
-        }
-        .streamlit-expanderContent {
-            background-color: #FFFFFF; /* 내부 배경 하얗게 */
-            padding: 1rem;
-            border: 1px solid #002C5F; /* 진한 파랑 경계선 */
-            border-radius: 0.5rem;
-            margin-top: -0.5rem; /* 헤더와의 간격 조절 */
-        }
-        .stJson, .stDataFrame, .stCode { /* JSON, DataFrame, Code Block 배경 */
-            background-color: #F0F0F0; /* 연한 회색 */
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        /* 에러 메시지 */
-        .stAlert div[data-testid="stMarkdownContainer"] {
-            color: #A93226; /* 빨간색 */
-            background-color: #FADBD8; /* 연한 빨강 배경 */
-            border-color: #A93226;
-            border-left: 5px solid;
-            border-radius: 0.5rem;
-        }
-        .stAlert div[data-testid="stMarkdownContainer"].success {
-            color: #28B463; /* 녹색 */
-            background-color: #D5F5E3; /* 연한 녹색 배경 */
-            border-color: #28B463;
-        }
-        .stAlert div[data-testid="stMarkdownContainer"].warning {
-            color: #D68910; /* 주황색 */
-            background-color: #FCF3CF; /* 연한 주황 배경 */
-            border-color: #D68910;
-        }
-
-        /* 텍스트 영역 */
-        .stTextArea textarea {
-            border: 1px solid #FFCD00; /* KB 옐로우 테두리 */
-            border-radius: 0.5rem;
-            padding: 0.5rem;
-        }
-        .stTextArea label {
-            color: #002C5F; /* 진한 파랑 */
-            font-weight: bold;
+            background-color: #F0F0F0; /* 호버 시 약간 회색 */
+            color: #000000;
+            border-color: #FFDE00;
         }
         </style>
     """, unsafe_allow_html=True)
