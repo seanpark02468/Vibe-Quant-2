@@ -215,7 +215,7 @@ def main():
             color: #333333; /* 어두운 회색 (기본 텍스트) */
         }
 
-        /* 기본 버튼 (시작 버튼) */
+        /* 기본 버튼 (시작 버튼을 제외한 다른 버튼) */
         .stButton button {
             background-color: #002C5F; /* 진한 파랑 */
             color: #FFFFFF; /* 흰색 텍스트 */
@@ -231,8 +231,8 @@ def main():
             box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
         }
 
-        /* Primary 버튼 (type="primary" 버튼) */
-        .stButton button[data-testid="stFormSubmitButton"], .stButton button[data-testid="stSidebarSubmitButton"] {
+        /* Primary 버튼 (type="primary" 버튼) - 메인 컨텐츠 영역의 primary 버튼 */
+        .stButton button[data-testid="stFormSubmitButton"] {
             background-color: #002C5F; /* 진한 파랑 */
             color: #FFFFFF; /* 흰색 텍스트 */
             border: none;
@@ -241,18 +241,22 @@ def main():
             font-weight: bold;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
-        .stButton button[data-testid="stFormSubmitButton"]:hover, .stButton button[data-testid="stSidebarSubmitButton"]:hover {
+        .stButton button[data-testid="stFormSubmitButton"]:hover {
             background-color: #003B7F; /* 약간 더 진한 파랑 */
             color: #FFFFFF; /* 흰색 텍스트 */
             box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
         }
-        .stButton button[data-testid="stSidebarSubmitButton"] { /* "시작" 버튼 */
-             background-color: #FFCD00; /* 사이드바에 있으므로 노란색 */
-             color: #002C5F; /* 진한 파랑 텍스트 */
+
+        /* "시작" 버튼 (사이드바의 primary 버튼) */
+        .stButton button[data-testid="stSidebarSubmitButton"] {
+             background-color: #FFFFFF; /* 흰색 배경 */
+             color: #000000; /* 검은색 글씨 */
+             border: 1px solid #FFCD00; /* 노란색 테두리 */
         }
         .stButton button[data-testid="stSidebarSubmitButton"]:hover {
-             background-color: #FFDE00; /* 약간 더 밝은 노란색 */
-             color: #002C5F;
+             background-color: #F0F0F0; /* 호버 시 약간 회색 */
+             color: #000000;
+             border-color: #FFDE00;
         }
 
         /* 스피너 및 상태 메시지 */
