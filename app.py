@@ -329,7 +329,7 @@ def main():
     # --- UI 구성 ---
     st.title("Vibe Quant")
     st.markdown("""
-    Vibe Quant는 개인 투자자가 손쉽게 퀀트 투자를 경험해볼 수 있게 도와줍니다.\n
+    Vibe Quant는 개인 투자자가 손쉽게 퀀트 투자를 경험해볼 수 있게 도와줍니다.
     당신의 투자 아이디어를 바탕으로, 초과 수익 기회를 찾아주는 투자 포뮬라 (알파 팩터)를 탐색합니다.
     """)
 
@@ -386,7 +386,7 @@ def main():
                 # st.write("**평가 결과:**")
                 # st.dataframe(pd.DataFrame(evaluated_factors))
                 st.success("알파 팩터 평가가 완료되었습니다.")
-
+            
             if not evaluated_factors or pd.DataFrame(evaluated_factors).empty:
                 st.warning("유효한 알파 팩터가 발굴되지 않았습니다."); return
 
@@ -395,7 +395,7 @@ def main():
 
             # 최적화를 위해 IC 값이 유효한(NaN이 아닌) 팩터만 필터링합니다.
             valid_factors_for_opt = [
-                f for f in evaluated_factors
+                f for f in evaluated_factors 
                 if f.get('ic') is not None and pd.notna(f.get('ic'))
             ]
 
@@ -448,3 +448,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
