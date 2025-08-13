@@ -66,7 +66,7 @@ def main():
             
             with st.expander("탐색 과정 보기", expanded=True):
                 # --- 가설 생성 단계 ---
-                with st.spinner("LLM이 당신의 투자 아이디어에 부합하는 투자 가설을 생성 중입니다..."):
+                with st.spinner("Vibe Quant가 당신의 투자 아이디어에 부합하는 투자 가설을 생성 중입니다..."):
                     current_hypothesis = idea_agent.generate_initial_hypothesis(initial_insight)
                 if not current_hypothesis:
                     st.error("가설 생성에 실패했습니다. 워크플로우를 중단합니다."); return
@@ -74,7 +74,7 @@ def main():
                 st.success("가설 생성이 완료되었습니다.")
 
                 # --- 알파 팩터 생성 단계 ---
-                with st.spinner("LLM이 투자 가설을 바탕으로 알파 팩터를 생성 중입니다..."):
+                with st.spinner("Vibe Quant가 투자 가설을 바탕으로 알파 팩터를 생성 중입니다..."):
                     generated_factors = factor_agent.create_factors(current_hypothesis, num_factors=3)
                 if not generated_factors:
                     st.error("알파 팩터 생성에 실패했습니다. 워크플로우를 중단합니다."); return
@@ -128,8 +128,8 @@ def main():
                 st.warning("점수를 계산할 유효한 팩터가 없습니다."); return
             
             final_ranked_factors.sort(key=lambda x: x['optimized_score'], reverse=True)
-            st.write("알파 팩터 랭킹:")
-            st.dataframe(pd.DataFrame(final_ranked_factors))
+            # st.write("알파 팩터 랭킹:")
+            # st.dataframe(pd.DataFrame(final_ranked_factors))
 
             best_factor = final_ranked_factors[0]
 
@@ -137,8 +137,8 @@ def main():
             # st.json(best_factor)
 
             # --- 투자 조언 리포트 생성 ---
-            st.header("📜 최종 투자 조언 리포트")
-            with st.spinner("LLM이 최종 리포트를 작성 중입니다..."):
+            st.header("투자 조언 리포트")
+            with st.spinner("Vibe Quant가 투자 조언 리포트를 작성 중입니다..."):
                 final_report = advice_agent.generate_advice_report(best_factor)
 
             st.markdown(final_report)
