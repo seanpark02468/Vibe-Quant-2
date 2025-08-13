@@ -35,13 +35,13 @@ def main():
     당신의 투자 아이디어를 바탕으로, 초과 수익 기회를 찾아주는 투자 포뮬라 (알파 팩터)를 탐색합니다.
     """)
 
-    st.sidebar.header("입력 패널")
+    # st.sidebar.header("입력 패널")
     initial_insight = st.sidebar.text_area(
         "당신의 투자 아이디어를 입력하세요",
         height=150,
         placeholder="예시: 거래량이 급증하는 소형주는 단기적으로 가격이 상승하는 경향이 있다."
     )
-    start_button = st.sidebar.button("알파 팩터 탐색 시작", type="primary")
+    start_button = st.sidebar.button("Go", type="primary")
 
     # --- 워크플로우 실행 ---
     if start_button:
@@ -51,7 +51,7 @@ def main():
 
         try:
             # 1. 에이전트 및 클라이언트 초기화
-            with st.status("에이전트 및 클라이언트 초기화 중...", expanded=True) as status:
+            with st.status("에이전트 및 클라이언트 초기화...", expanded=True) as status:
                 llm_client = LLMClient()
                 backtester_client = BacktesterClient()
                 idea_agent = IdeaAgent(llm_client)
@@ -108,8 +108,7 @@ def main():
                 with st.spinner("알파 팩터 최적화 진행 중..."):
                     # 필터링된 유효한 팩터 리스트를 최적화 함수에 전달합니다.
                     optimal_params = optimizer.optimize(valid_factors_for_opt)
-            
-            st.success("알파팩터 최적화가 완료되었습니다.")
+                st.success("알파팩터 최적화가 완료되었습니다.")
 
             # 4. 메인 로직 (3단계): 알파 팩터 설명 및 투자 조언
             st.subheader("3단계: 알파 팩터 설명 및 투자 조언")
@@ -135,7 +134,7 @@ def main():
             best_factor = final_ranked_factors[0]
 
             st.write("✨ **최종 선정된 최상의 알파 팩터:**")
-            st.json(best_factor)
+            # st.json(best_factor)
 
             # --- 투자 조언 리포트 생성 ---
             st.header("📜 최종 투자 조언 리포트")
