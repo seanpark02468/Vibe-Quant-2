@@ -111,8 +111,8 @@ def main():
                     optimal_params = optimizer.optimize(valid_factors_for_opt)
                 st.success("알파팩터 최적화가 완료되었습니다.")
 
-            # 4. 메인 로직 (3단계): 알파 팩터 설명 및 투자 조언
-            st.subheader("3단계: 알파 팩터 설명 및 투자 조언")
+            # 4. 메인 로직 (3단계): 투자 조언 생성
+            st.subheader("3단계: 투자 조언 생성")
 
             final_ranked_factors = []
             for factor in evaluated_factors:
@@ -134,13 +134,14 @@ def main():
 
             best_factor = final_ranked_factors[0]
 
-            st.write("✨ **최종 선정된 최상의 알파 팩터:**")
+            # st.write("✨ **최종 선정된 최상의 알파 팩터:**")
             # st.json(best_factor)
 
             # --- 투자 조언 리포트 생성 ---
-            st.header("투자 조언 리포트")
+            # st.header("투자 조언 리포트")
             with st.spinner("Vibe Quant가 투자 조언 리포트를 작성 중입니다..."):
                 final_report = advice_agent.generate_advice_report(best_factor)
+            st.success("투자 조언 리포트 작성이 완료되었습니다.")
 
             st.markdown(final_report)
 
