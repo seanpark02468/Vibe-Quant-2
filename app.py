@@ -321,3 +321,6 @@ def main():
         except Exception as e:
             # 붉은색 오류 메시지를 노란색 경고 메시지로 변경
             st.warning(f"오류가 발생했습니다: {e}")
+
+if __name__ == "__main__":
+    main()
