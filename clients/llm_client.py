@@ -1,4 +1,4 @@
-# /clients/llm_client.py
+# /clients/llm_client.p
 
 import streamlit as st
 from openai import OpenAI
