@@ -1,4 +1,4 @@
-# /clients/backtester_client.py
+# /clients/backtester_client.p
 
 import pandas as pd
 import lightgbm as lgb
