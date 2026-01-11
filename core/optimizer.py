@@ -84,3 +84,4 @@ class HyperparameterOptimizer:
         optimizer.maximize(init_points=5, n_iter=10)
 
         return optimizer.max['params']
+.
